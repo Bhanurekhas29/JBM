@@ -56,7 +56,19 @@ export default function Footer({ brand, footer }) {
         </div>
 
         {f.bottom_tagline && <p className="footer-tagline" data-reveal="up">{f.bottom_tagline}</p>}
-        {f.copyright_text && <p className="footer-copy">{f.copyright_text.replace(/\{year\}/g, year)}</p>}
+        {(f.copyright_text || b.show_credits) && (
+          <div className="footer-bottom">
+            {f.copyright_text && <p className="footer-copy">{f.copyright_text.replace(/\{year\}/g, year)}</p>}
+            {b.show_credits && (
+              <p className="footer-credit">
+                Designed &amp; Developed by{' '}
+                {b.credits_url
+                  ? <a href={b.credits_url} target="_blank" rel="noopener noreferrer">Vetri IT Systems</a>
+                  : 'Vetri IT Systems'}
+              </p>
+            )}
+          </div>
+        )}
       </div>
     </footer>
   )

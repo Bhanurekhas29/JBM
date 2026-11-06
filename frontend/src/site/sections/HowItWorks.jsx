@@ -26,7 +26,7 @@ export default function HowItWorks({ data }) {
               <span className="how-rule" />
               <h3>{st.title}</h3>
               {st.description && <p>{st.description}</p>}
-              {i < steps.length - 1 && <span className="how-arrow" aria-hidden="true"><Icon name="arrowRight" size={12} /></span>}
+              {i < steps.length - 1 && <span className="how-arrow" aria-hidden="true"><Icon name="chevronRight" size={15} /></span>}
             </li>
           ))}
         </ol>

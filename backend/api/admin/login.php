@@ -13,12 +13,13 @@ $username = trim((string)($in['username'] ?? ''));
 $password = (string)($in['password'] ?? '');
 
 if ($username === '' || $password === '') {
-    json_out(['ok' => false, 'message' => 'Username and password are required.'], 422);
+    json_out(['ok' => false, 'message' => 'Username or email and password are required.'], 422);
 }
 
 try {
-    $st = db()->prepare('SELECT id, username, password_hash, last_login, is_active FROM admins WHERE username = ? LIMIT 1');
-    $st->execute([$username]);
+    // Sign in with either the username or the email address saved on the user.
+    $st = db()->prepare("SELECT id, username, password_hash, last_login, is_active FROM admins WHERE username = ? OR (email <> '' AND email = ?) ORDER BY (username = ?) DESC LIMIT 1");
+    $st->execute([$username, $username, $username]);
     $admin = $st->fetch();
 } catch (Throwable $e) {
     json_out(['ok' => false, 'message' => 'Database unavailable. Check backend/config/config.php.'], 500);
@@ -28,7 +29,7 @@ if (!$admin || !$admin['is_active'] || !password_verify($password, $admin['passw
     $_SESSION['fails'] = ($_SESSION['fails'] ?? 0) + 1;
     if ($_SESSION['fails'] >= 5) { $_SESSION['lock_until'] = $now + 300; $_SESSION['fails'] = 0; }
     usleep(400000);
-    json_out(['ok' => false, 'message' => 'Invalid username or password.'], 401);
+    json_out(['ok' => false, 'message' => 'Invalid username/email or password.'], 401);
 }
 
 session_regenerate_id(true);

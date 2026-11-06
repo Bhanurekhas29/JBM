@@ -4,6 +4,7 @@ import { useAuth } from './AuthContext.jsx'
 import { menu } from './menu.js'
 import { Icon } from './icons.jsx'
 import { ADMIN_LOGO } from './adminAssets.js'
+import NotificationBell from './NotificationBell.jsx'
 
 function SidebarItem({ item, onNavigate }) {
   const I = Icon[item.icon] || Icon.menu
@@ -76,6 +77,8 @@ export default function AdminLayout() {
               <span key={i} className="tp-seg"><i>/</i>{i === trail.length - 1 ? <b>{t}</b> : t}</span>
             ))}
           </nav>
+
+          <NotificationBell />
 
           <div className="user-dd" ref={ref}>
             <button className="user-btn" onClick={() => setUserMenu((o) => !o)}>

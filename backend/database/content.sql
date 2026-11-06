@@ -6,7 +6,7 @@ REPLACE INTO `brand` (`id`, `website_name`, `header_logo`, `footer_logo`, `favic
 -- @@
 DELETE FROM `seo`
 -- @@
-REPLACE INTO `seo` (`id`, `meta_title`, `meta_description`, `primary_keywords`, `secondary_keywords`, `updated_at`) VALUES ('1', '', '', '', '', '2026-11-06 10:23:25')
+REPLACE INTO `seo` (`id`, `meta_title`, `meta_description`, `primary_keywords`, `secondary_keywords`, `updated_at`) VALUES ('1', 'Josh Brand Management Solutions', '', '', '', '2026-11-06 15:05:13')
 -- @@
 DELETE FROM `header_settings`
 -- @@
@@ -90,15 +90,15 @@ DELETE FROM `faq_items`
 -- @@
 REPLACE INTO `faq_items` (`id`, `question`, `answer`, `sort_order`, `is_active`, `created_at`) VALUES ('1', 'Does JBM guarantee trademark or patent registration?', 'No. Registration decisions are made by the relevant statutory authorities. Searches and assessments can help identify potential issues, but cannot guarantee acceptance or registration.', '1', '1', '2026-11-06 11:07:42')
 -- @@
-REPLACE INTO `faq_items` (`id`, `question`, `answer`, `sort_order`, `is_active`, `created_at`) VALUES ('2', 'Are government fees included in the quotation?', '', '2', '0', '2026-11-06 11:07:42')
+REPLACE INTO `faq_items` (`id`, `question`, `answer`, `sort_order`, `is_active`, `created_at`) VALUES ('2', 'Are government fees included in the quotation?', 'Government fees and professional service charges are communicated separately wherever applicable. Your quotation will explain the relevant costs before you confirm the engagement.', '2', '1', '2026-11-06 11:07:42')
 -- @@
-REPLACE INTO `faq_items` (`id`, `question`, `answer`, `sort_order`, `is_active`, `created_at`) VALUES ('3', 'Can I enquire if I do not know the relevant IP category?', '', '3', '0', '2026-11-06 11:07:42')
+REPLACE INTO `faq_items` (`id`, `question`, `answer`, `sort_order`, `is_active`, `created_at`) VALUES ('3', 'Can I enquire if I do not know the relevant IP category?', 'Absolutely. Share your ideas, product, brand or creative work with us. We will help identify the relevant service category and appropriate next steps.', '3', '1', '2026-11-06 11:07:42')
 -- @@
-REPLACE INTO `faq_items` (`id`, `question`, `answer`, `sort_order`, `is_active`, `created_at`) VALUES ('4', 'Who handles specialist patent or legal work?', '', '4', '0', '2026-11-06 11:07:42')
+REPLACE INTO `faq_items` (`id`, `question`, `answer`, `sort_order`, `is_active`, `created_at`) VALUES ('4', 'Who handles specialist patent or legal work?', 'Specialist and regulated professional work is coordinated through appropriately qualified and authorised independent professionals, wherever required.', '4', '1', '2026-11-06 11:07:42')
 -- @@
-REPLACE INTO `faq_items` (`id`, `question`, `answer`, `sort_order`, `is_active`, `created_at`) VALUES ('5', 'Can I request multiple services together?', '', '5', '0', '2026-11-06 11:07:42')
+REPLACE INTO `faq_items` (`id`, `question`, `answer`, `sort_order`, `is_active`, `created_at`) VALUES ('5', 'Can I request multiple services together?', 'Yes. You can submit requirements for multiple services, including intellectual property protection, commercial agreements and brand development.', '5', '1', '2026-11-06 11:07:42')
 -- @@
-REPLACE INTO `faq_items` (`id`, `question`, `answer`, `sort_order`, `is_active`, `created_at`) VALUES ('6', 'How long does the process take?', '', '6', '0', '2026-11-06 11:07:42')
+REPLACE INTO `faq_items` (`id`, `question`, `answer`, `sort_order`, `is_active`, `created_at`) VALUES ('6', 'How long does the process take?', 'Timelines depend on the nature of the service, documentation, professional requirements and statutory procedures. We communicate the estimated timeline before proceeding.', '6', '1', '2026-11-06 11:07:42')
 -- @@
 DELETE FROM `contact_section`
 -- @@
@@ -106,7 +106,7 @@ REPLACE INTO `contact_section` (`id`, `show_section`, `eyebrow`, `heading_before
 -- @@
 DELETE FROM `footer_settings`
 -- @@
-REPLACE INTO `footer_settings` (`id`, `about_text`, `link_columns`, `phone`, `email`, `address`, `office_hours`, `socials`, `bottom_tagline`, `copyright_text`, `updated_at`) VALUES ('1', 'IP-focused services and coordinated business-growth support for entrepreneurs, innovators and businesses.', '[{\"title\":\"OUR SERVICES\",\"links\":[{\"label\":\"Trademark & IP services\",\"url\":\"#ip-services\"},{\"label\":\"Patent services\",\"url\":\"#ip-services\"},{\"label\":\"Copyright & design\",\"url\":\"#ip-services\"},{\"label\":\"Commercial contracts\",\"url\":\"#ip-services\"},{\"label\":\"Digital marketing\",\"url\":\"#our-services\"},{\"label\":\"Graphic design\",\"url\":\"#our-services\"}]},{\"title\":\"EXPLORE\",\"links\":[{\"label\":\"About JBM\",\"url\":\"#about\"},{\"label\":\"How it works\",\"url\":\"#how-it-works\"},{\"label\":\"FAQs\",\"url\":\"#faqs\"},{\"label\":\"Contact \\/ Enquiry\",\"url\":\"#contact\"}]},{\"title\":\"Legal\",\"links\":[{\"label\":\"Privacy Policy\",\"url\":\"#legal:privacy-policy\"},{\"label\":\"Terms & Conditions\",\"url\":\"#legal:terms-and-conditions\"},{\"label\":\"Refund & Cancellation Policy\",\"url\":\"#legal:refund-and-cancellation-policy\"},{\"label\":\"Disclaimer\",\"url\":\"#legal:disclaimer\"}]}]', '', '', 'Coimbatore, Tamilnadu, India.', 'Monday - Saturday, 9.00 AM - 7.00 PM IST', '{\"linkedin\":\"\",\"instagram\":\"\",\"x\":\"\"}', 'Protecting ideas. Strengthening businesses. Building brands.', '© {year} JBM Solutions. All rights reserved.', '2026-11-06 12:51:00')
+REPLACE INTO `footer_settings` (`id`, `about_text`, `link_columns`, `phone`, `email`, `address`, `office_hours`, `socials`, `bottom_tagline`, `copyright_text`, `updated_at`) VALUES ('1', 'IP-focused services and coordinated business-growth support for entrepreneurs, innovators and businesses.', '[{\"title\":\"OUR SERVICES\",\"links\":[{\"label\":\"Trademark & IP services\",\"url\":\"#ip-services\"},{\"label\":\"Patent services\",\"url\":\"#ip-services\"},{\"label\":\"Copyright & design\",\"url\":\"#ip-services\"},{\"label\":\"Commercial contracts\",\"url\":\"#ip-services\"},{\"label\":\"Digital marketing\",\"url\":\"#our-services\"},{\"label\":\"Graphic design\",\"url\":\"#our-services\"}]},{\"title\":\"EXPLORE\",\"links\":[{\"label\":\"About JBM\",\"url\":\"#about\"},{\"label\":\"How it works\",\"url\":\"#how-it-works\"},{\"label\":\"FAQs\",\"url\":\"#faqs\"},{\"label\":\"Contact \\/ Enquiry\",\"url\":\"#contact\"}]},{\"title\":\"Legal\",\"links\":[{\"label\":\"Privacy Policy\",\"url\":\"#legal:privacy-policy\"},{\"label\":\"Terms & Conditions\",\"url\":\"#legal:terms-and-conditions\"},{\"label\":\"Refund & Cancellation Policy\",\"url\":\"#legal:refund-and-cancellation-policy\"},{\"label\":\"Disclaimer\",\"url\":\"#legal:disclaimer\"}]}]', '+91 86681 17743', '', 'Coimbatore, Tamilnadu, India.', 'Monday - Saturday, 9.00 AM - 7.00 PM IST', '{\"linkedin\":\"\",\"instagram\":\"https://www.instagram.com/joshbrandmanagementsolutions?srtk=OWVlYXBhNTM4eWY1\",\"x\":\"\"}', 'Protecting ideas. Strengthening businesses. Building brands.', '© {year} JBM Solutions. All rights reserved.', '2026-11-06 15:55:41')
 -- @@
 DELETE FROM `legal_pages`
 -- @@
@@ -120,5 +120,5 @@ REPLACE INTO `legal_pages` (`id`, `title`, `slug`, `content`, `sort_order`, `is_
 -- @@
 DELETE FROM `floating_icons`
 -- @@
-REPLACE INTO `floating_icons` (`id`, `show_whatsapp`, `whatsapp_number`, `whatsapp_message`, `show_call`, `call_number`, `position`, `updated_at`) VALUES ('1', '1', '9876543210987', '', '1', '9874563210', 'right', '2026-11-06 12:34:21')
+REPLACE INTO `floating_icons` (`id`, `show_whatsapp`, `whatsapp_number`, `whatsapp_message`, `show_call`, `call_number`, `position`, `updated_at`) VALUES ('1', '1', '+91 86681 17743', '', '1', '+91 86681 17743', 'right', '2026-11-06 15:55:40')
 -- @@

@@ -3,6 +3,8 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import { ToastProvider } from './Toast.jsx'
 import { AuthProvider, useAuth } from './AuthContext.jsx'
 import Login from './pages/Login.jsx'
+import ForgotPassword from './pages/ForgotPassword.jsx'
+import ResetPassword from './pages/ResetPassword.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import Users from './pages/Users.jsx'
 import Brand from './pages/Brand.jsx'
@@ -63,6 +65,8 @@ export default function AdminApp() {
     <AuthProvider>
       <Routes>
         <Route path="login" element={<GuestOnly><Login /></GuestOnly>} />
+        <Route path="forgot-password" element={<GuestOnly><ForgotPassword /></GuestOnly>} />
+        <Route path="reset-password" element={<ResetPassword />} />
         <Route element={<Protected><AdminLayout /></Protected>}>
           <Route index element={<Dashboard />} />
           <Route path="users" element={<Users />} />

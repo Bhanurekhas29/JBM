@@ -27,6 +27,8 @@ $config = [
     // Password for the default "admin" user, used only when the database is first created.
     // Empty = Admin@2026 on a local database, or a random password (printed once in the log) on a hosted one.
     'admin_password' => $env('ADMIN_PASSWORD', ''),
+    // Public address of the site, used in password-reset links (e.g. https://jbm-zrjt.onrender.com). Empty = taken from the request.
+    'app_url' => rtrim($env('APP_URL', ''), '/'),
     'session_name' => 'JBMADMINSESS',
     'session_lifetime' => 60 * 60 * 8, // 8 hours
     // Origins allowed to call the API from another address (the Vite dev server). Same-origin needs none.

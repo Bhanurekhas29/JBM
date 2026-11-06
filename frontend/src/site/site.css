@@ -185,6 +185,7 @@ html { scroll-behavior: smooth; }
 .how-rule { display: block; width: 44px; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 0 auto 18px; }
 .how-card h3 { font-family: var(--serif); font-size: 1.4rem; font-weight: 700; line-height: 1.2; color: var(--navy); margin-bottom: 12px; }
 .how-card p { font-size: .83rem; color: var(--muted); line-height: 1.65; }
+.how-arrow svg { stroke-width: 2.6; }
 .how-arrow { position: absolute !important; right: calc(var(--how-gap) / -2 - 15px);   /* +1px: the card has a 1px border */ top: 50%; transform: translateY(-50%); width: 28px; height: 28px; border-radius: 50%; background: #fff; border: 1.5px solid #e6c98a; color: var(--gold); display: grid; place-items: center; z-index: 3 !important; box-shadow: 0 4px 12px rgba(14,31,56,.1); }
 
 /* =========================================================
@@ -241,9 +242,9 @@ html { scroll-behavior: smooth; }
 .faq-q:hover .faq-toggle { background: #fbf3e1; }
 .faq-item.open .faq-toggle { transform: rotate(45deg); background: linear-gradient(135deg, #d9b667, var(--gold)); color: #fff; border-color: transparent; border-radius: 6px; }
 .faq-item.open .faq-toggle svg { transform: rotate(-45deg); }
-.faq-a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s ease; }
-.faq-a > div { overflow: hidden; }
-.faq-item.open .faq-a { grid-template-rows: 1fr; }
+.faq-a { overflow: hidden; height: 0; transition: height .45s cubic-bezier(.22,.8,.3,1); }
+.faq-a p { opacity: 0; transform: translateY(-8px); transition: opacity .25s ease, transform .35s ease; }
+.faq-item.open .faq-a p { opacity: 1; transform: none; transition: opacity .4s ease .12s, transform .45s ease .12s; }
 .faq-a p { padding: 0 70px 24px 24px; font-size: .86rem; color: var(--muted); line-height: 1.7; }
 .faq-q:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: -2px; border-radius: 16px; }
 
@@ -323,7 +324,11 @@ html { scroll-behavior: smooth; }
 .footer-contact li { display: flex; gap: 11px; align-items: flex-start; font-size: .9rem; line-height: 1.55; color: rgba(255,255,255,.82); }
 .footer-contact li svg { color: var(--gold); flex: none; margin-top: 2px; }
 .footer-tagline { text-align: center; font-family: var(--serif); font-size: clamp(1rem, 1.8vw, 1.3rem); font-weight: 500; color: var(--gold); padding: 24px 0; border-top: 1px solid rgba(255,255,255,.1); border-bottom: 1px solid rgba(255,255,255,.1); }
-.footer-copy { font-size: .8rem; color: rgba(255,255,255,.5); padding-top: 20px; }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px 24px; padding-top: 20px; }
+.footer-copy { font-size: .8rem; color: rgba(255,255,255,.5); }
+.footer-credit { font-size: .8rem; color: rgba(255,255,255,.5); margin-left: auto; text-align: right; }
+.site .footer-credit a { color: var(--gold); transition: color .2s; }
+.site .footer-credit a:hover { color: var(--gold-bright); text-decoration: underline; }
 
 /* =========================================================
    Legal pop-up
@@ -781,3 +786,23 @@ html { scroll-behavior: smooth; }
 /* floating icons: win over ".site a { color: inherit }" so the gold glyph shows on the navy button */
 .site .float-btn { color: var(--gold-bright); }
 .site .float-btn:hover, .site .float-btn:focus-visible { color: var(--navy-deep); }
+
+/* =========================================================
+   Mobile polish
+   ========================================================= */
+@media (max-width: 1199px) {
+  /* the contact art's white wedge is meant for the desktop layout; fade it into the navy on small screens */
+  .contact-bg { height: 210px; background-size: auto 100%; background-position: 6% center; background-color: var(--navy); }
+  .contact-bg::after { content: ''; position: absolute; inset: 0;
+    background:
+      linear-gradient(0deg, var(--navy) 0, rgba(14,31,56,0) 38%),
+      linear-gradient(90deg, rgba(14,31,56,0) 30%, var(--navy) 58%); }
+  .contact-grid { margin-top: 6px; }
+}
+@media (max-width: 767px) {
+  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 6px; padding-right: 64px; }   /* keep clear of the floating buttons */
+  .footer-credit { margin-left: 0; text-align: left; }
+  .site-footer .container { padding-bottom: 8px; }
+  .float-btn { width: 46px; height: 46px; }
+  .float-btn svg { width: 20px; height: 20px; }
+}

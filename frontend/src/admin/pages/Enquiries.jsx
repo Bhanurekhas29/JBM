@@ -2,6 +2,8 @@ import { useEffect, useState, useCallback } from 'react'
 import { adminApi } from '../api.js'
 import { Icon } from '../icons.jsx'
 import { useToast } from '../Toast.jsx'
+import { exportEnquiries } from '../exportEnquiries.js'
+import { ENQUIRIES_CHANGED } from '../NotificationBell.jsx'
 
 function fmt(d) {
   const dt = new Date(String(d).replace(' ', 'T'))
@@ -41,8 +43,19 @@ export default function Enquiries() {
   const [tab, setTab] = useState('all')
   const [viewing, setViewing] = useState(null)
 
-  const load = useCallback(() => adminApi.enquiries.list().then((r) => { setItems(r.enquiries); setUnread(r.unread) }).finally(() => setLoading(false)), [])
+  const [exporting, setExporting] = useState(false)
+
+  const load = useCallback(() => adminApi.enquiries.list().then((r) => { setItems(r.enquiries); setUnread(r.unread); window.dispatchEvent(new Event(ENQUIRIES_CHANGED)) }).finally(() => setLoading(false)), [])
   useEffect(() => { load() }, [load])
+
+  async function doExport() {
+    if (!shown.length) { toast.error('There are no enquiries to export.'); return }
+    setExporting(true)
+    try {
+      await exportEnquiries(shown, tab === 'new' ? 'New enquiries' : 'All enquiries')
+      toast.success(`Exported ${shown.length} enquir${shown.length === 1 ? 'y' : 'ies'} to Excel`)
+    } catch (err) { toast.error('Could not create the Excel file.') } finally { setExporting(false) }
+  }
 
   async function setRead(e, isRead, quiet) {
     try { await adminApi.enquiries.setRead(e.id, isRead); if (!quiet) toast.success(isRead ? 'Marked as read' : 'Marked as unread'); load() } catch (err) { toast.error(err.message) }
@@ -65,24 +78,27 @@ export default function Enquiries() {
       <section className="card">
         <div className="card-head row">
           <h3>All enquiries ({items.length})</h3>
-          <div className="tabs">
-            <button className={tab === 'all' ? 'on' : ''} onClick={() => setTab('all')}>All</button>
-            <button className={tab === 'new' ? 'on' : ''} onClick={() => setTab('new')}>New{unread > 0 && <span className="count">{unread}</span>}</button>
+          <div className="head-tools">
+            <div className="tabs">
+              <button className={tab === 'all' ? 'on' : ''} onClick={() => setTab('all')}>All</button>
+              <button className={tab === 'new' ? 'on' : ''} onClick={() => setTab('new')}>New{unread > 0 && <span className="count">{unread}</span>}</button>
+            </div>
+            <button className="adm-btn export-btn" onClick={doExport} disabled={exporting || loading}><Icon.download width={16} height={16} />{exporting ? 'Exporting...' : 'Export to Excel'}</button>
           </div>
         </div>
         <div className="tbl-wrap">
-          <table className="tbl">
+          <table className="tbl enq-tbl">
             <thead><tr><th>Received</th><th>Name</th><th>Contact</th><th>Message</th><th>Status</th><th /></tr></thead>
             <tbody>
               {loading && <tr><td colSpan="6" className="muted">Loading...</td></tr>}
               {!loading && !shown.length && <tr><td colSpan="6" className="muted" style={{ textAlign: 'center', padding: 40 }}>{tab === 'new' ? 'No new enquiries.' : 'No enquiries yet. Submissions from the website enquiry form will appear here.'}</td></tr>}
               {shown.map((e) => (
                 <tr key={e.id} className={e.is_read ? '' : 'unread'} onClick={() => open(e)} style={{ cursor: 'pointer' }}>
-                  <td className="muted" style={{ whiteSpace: 'nowrap' }}>{fmt(e.created_at)}</td>
-                  <td><strong>{e.name}</strong>{e.organization && <div className="muted">{e.organization}</div>}{e.service && <div className="muted">{e.service}</div>}</td>
-                  <td>{e.email}{e.phone && <div className="muted">{e.phone}</div>}</td>
-                  <td className="muted enq-prev">{e.message}</td>
-                  <td><span className={'badge ' + (e.is_read ? 'off' : 'on')}>{e.is_read ? 'Read' : 'New'}</span></td>
+                  <td data-label="Received" className="muted" style={{ whiteSpace: 'nowrap' }}>{fmt(e.created_at)}</td>
+                  <td data-label="Name"><strong>{e.name}</strong>{e.organization && <div className="muted">{e.organization}</div>}{e.service && <div className="muted">{e.service}</div>}</td>
+                  <td data-label="Contact">{e.email}{e.phone && <div className="muted">{e.phone}</div>}</td>
+                  <td data-label="Message" className="muted enq-prev">{e.message}</td>
+                  <td data-label="Status"><span className={'badge ' + (e.is_read ? 'off' : 'on')}>{e.is_read ? 'Read' : 'New'}</span></td>
                   <td className="actions" onClick={(ev) => ev.stopPropagation()}>
                     <button className="row-btn" title={e.is_read ? 'Mark as unread' : 'Mark as read'} onClick={() => setRead(e, !e.is_read)}>{e.is_read ? <Icon.mail /> : <Icon.check />}</button>
                     <button className="row-btn danger" title="Delete" onClick={() => remove(e)}><Icon.trash /></button>

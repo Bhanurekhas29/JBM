@@ -56,7 +56,38 @@ function api_init(string|array $methods): void {
         'samesite' => 'Lax',
         'secure' => !empty($_SERVER['HTTPS']) || (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https'),
     ]);
+    // Public page loads (GET, no login cookie) never need a session, so skip the extra database work for them.
+    if ($_SERVER['REQUEST_METHOD'] === 'GET' && empty($_COOKIE[session_name()])) { $_SESSION = []; return; }
+    // Sessions live in the database, so a login survives the hosting server restarting or sleeping.
+    session_set_save_handler(new DbSessionHandler(), true);
     session_start();
+}
+
+class DbSessionHandler implements SessionHandlerInterface {
+    private string $seen = '';
+    public function open(string $path, string $name): bool { return true; }
+    public function close(): bool { return true; }
+    public function read(string $id): string|false {
+        $st = db()->prepare('SELECT data FROM admin_sessions WHERE id = ? AND expires > ?');
+        $st->execute([$id, time()]);
+        $d = $st->fetchColumn();
+        $this->seen = $d === false ? '' : (string)$d;
+        return $this->seen;
+    }
+    public function write(string $id, string $data): bool {
+        // Unchanged sessions are not rewritten on every request; their expiry is refreshed now and then.
+        $life = (int)cfg('session_lifetime');
+        if ($data === $this->seen && $data !== '' && mt_rand(1, 20) !== 1) return true;
+        db()->prepare('REPLACE INTO admin_sessions (id, data, expires) VALUES (?, ?, ?)')->execute([$id, $data, time() + $life]);
+        return true;
+    }
+    public function destroy(string $id): bool {
+        db()->prepare('DELETE FROM admin_sessions WHERE id = ?')->execute([$id]);
+        return true;
+    }
+    public function gc(int $max_lifetime): int|false {
+        return db()->exec('DELETE FROM admin_sessions WHERE expires < ' . time());
+    }
 }
 
 function request_json(): array {

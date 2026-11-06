@@ -7,6 +7,8 @@ async function call(path, options = {}) {
   let data = {}
   try { data = await res.json() } catch { /* non-JSON response */ }
   if (!res.ok || data.ok === false) {
+    // Logged out while working (session expired): tell the app so it can go back to the sign-in page.
+    if (res.status === 401 && !/^(login|me|logout)\.php/.test(path)) window.dispatchEvent(new Event('jbm:session-expired'))
     const err = new Error(data.message || 'Request failed')
     err.status = res.status
     err.errors = data.errors || {}
@@ -18,6 +20,9 @@ async function call(path, options = {}) {
 export const adminApi = {
   login: (username, password) => call('login.php', { method: 'POST', body: JSON.stringify({ username, password }) }),
   me: () => call('me.php'),
+  forgotPassword: (email) => call('forgot_password.php', { method: 'POST', body: JSON.stringify({ email }) }),
+  checkReset: (token) => call(`reset_password.php?token=${encodeURIComponent(token)}`),
+  resetPassword: (token, password) => call('reset_password.php', { method: 'POST', body: JSON.stringify({ token, password }) }),
   users: {
     list: () => call('users.php'),
     create: (d) => call('users.php', { method: 'POST', body: JSON.stringify(d) }),
