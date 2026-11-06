@@ -10,7 +10,7 @@ sed -ri "s/__PORT__/${PORT}/" /etc/apache2/sites-available/000-default.conf
 # If the database is not reachable yet, keep going so the site itself still comes up.
 if [ -n "${DB_HOST}" ]; then
   for i in 1 2 3 4 5; do
-    if php /var/www/backend/database/seed.php && php /var/www/backend/database/import_content.php; then
+    if php /var/www/backend/database/seed.php && php /var/www/backend/database/import_content.php && php /var/www/backend/database/apply_updates.php; then
       break
     fi
     echo "Database setup attempt $i failed; retrying in 5s..."
