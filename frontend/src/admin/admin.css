@@ -382,3 +382,9 @@
   .login-page, .login-glow, .login-spark, .login-card, .login-card::before, .login-logo-wrap, .login-card *, .login-error { animation: none !important; }
   .login-spark { display: none; }
 }
+
+/* Top bar: sign-out button + dropdown arrow */
+.logout-btn:hover { color: #c0392b; background: #fdecea; border-color: #f3c9c5; }
+.user-caret { color: #8a93a3; transition: transform .25s ease, color .2s; }
+.user-btn:hover .user-caret { color: var(--navy); }
+.user-btn.open .user-caret { transform: rotate(180deg); color: var(--gold); }

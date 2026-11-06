@@ -32,5 +32,6 @@ export const Icon = {
   footer: (p) => <svg {...base} {...p}><rect x="3" y="4" width="18" height="16" rx="2" /><path d="M3 15h18" /></svg>,
   file: (p) => <svg {...base} {...p}><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5z" /><path d="M14 3v5h5M9 13h6M9 17h6" /></svg>,
   chat: (p) => <svg {...base} {...p}><path d="M21 12a8 8 0 0 1-11.7 7.1L4 20l1-4.4A8 8 0 1 1 21 12z" /></svg>,
+  chevronDown: (p) => <svg {...base} {...p}><path d="M6 9l6 6 6-6" /></svg>,
   chevron: (p) => <svg {...base} {...p}><path d="M9 6l6 6-6 6" /></svg>,
 }

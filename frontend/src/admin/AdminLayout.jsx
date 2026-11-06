@@ -26,6 +26,10 @@ export default function AdminLayout() {
   const { user, logout } = useAuth()
   const [open, setOpen] = useState(false)      // mobile drawer
   const [userMenu, setUserMenu] = useState(false)
+  const [confirmOut, setConfirmOut] = useState(false)   // "Sign out?" dialog
+  const [signingOut, setSigningOut] = useState(false)
+  const askLogout = () => { setUserMenu(false); setConfirmOut(true) }
+  const doLogout = async () => { setSigningOut(true); try { await logout() } finally { setSigningOut(false); setConfirmOut(false) } }
   const [logoOk, setLogoOk] = useState(true)
   const ref = useRef(null)
   const loc = useLocation()
@@ -80,21 +84,39 @@ export default function AdminLayout() {
 
           <NotificationBell />
 
+          <button className="notif-btn logout-btn" title="Sign out" aria-label="Sign out" onClick={askLogout}><Icon.logout /></button>
+
           <div className="user-dd" ref={ref}>
-            <button className="user-btn" onClick={() => setUserMenu((o) => !o)}>
+            <button className={'user-btn' + (userMenu ? ' open' : '')} aria-haspopup="menu" aria-expanded={userMenu} onClick={() => setUserMenu((o) => !o)}>
               <span className="avatar sm">{user.username[0].toUpperCase()}</span>
               <span className="uname">{user.username}</span>
+              <Icon.chevronDown className="user-caret" width={16} height={16} />
             </button>
             {userMenu && (
               <div className="dd-panel">
                 <div className="dd-head"><strong>{user.username}</strong><small>Administrator</small></div>
-                <button className="dd-item" onClick={logout}><Icon.logout /> Sign out</button>
+                <button className="dd-item" onClick={askLogout}><Icon.logout /> Sign out</button>
               </div>
             )}
           </div>
         </header>
 
         <main className="content"><Outlet /></main>
+        {confirmOut && (
+          <div className="modal-bg" onMouseDown={(e) => e.target === e.currentTarget && !signingOut && setConfirmOut(false)}
+               onKeyDown={(e) => e.key === 'Escape' && !signingOut && setConfirmOut(false)}>
+            <div className="modal" role="alertdialog" aria-modal="true" aria-labelledby="out-title" style={{ maxWidth: 400 }}>
+              <h3 id="out-title">Sign out?</h3>
+              <div style={{ padding: '10px 24px 22px' }}>
+                <p className="muted" style={{ margin: 0 }}>You will need to sign in again to manage the website.</p>
+                <div className="modal-foot">
+                  <button className="adm-btn sm ghost" onClick={() => setConfirmOut(false)} disabled={signingOut} autoFocus>Stay signed in</button>
+                  <button className="adm-btn sm" onClick={doLogout} disabled={signingOut}>{signingOut ? 'Signing out...' : 'Yes, sign out'}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         <footer className="adm-footer">&copy; {new Date().getFullYear()} JBM. All rights reserved.</footer>
       </div>
     </div>
