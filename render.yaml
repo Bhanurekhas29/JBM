@@ -1,0 +1,26 @@
+# Render Blueprint: one free web service built from the Dockerfile.
+# Values marked "sync: false" are asked for in the Render dashboard (they are never stored in GitHub).
+services:
+  - type: web
+    name: jbm
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /
+    envVars:
+      - key: DB_HOST          # TiDB Cloud host, e.g. gateway01.ap-southeast-1.prod.aws.tidbcloud.com
+        sync: false
+      - key: DB_PORT
+        value: "4000"
+      - key: DB_NAME
+        value: jbm
+      - key: DB_USER          # TiDB Cloud user, e.g. xxxxxxxx.root
+        sync: false
+      - key: DB_PASS          # TiDB Cloud password
+        sync: false
+      - key: DB_SSL
+        value: "1"
+      - key: APP_KEY          # encrypts the saved SMTP password; Render generates a random value
+        generateValue: true
+      - key: ADMIN_PASSWORD   # password of the "admin" login (used when the database is first created)
+        sync: false

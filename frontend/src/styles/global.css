@@ -1,0 +1,11 @@
+:root {
+  --navy: #0E1F38;
+  --gold: #C9A45C;
+  --gold-bright: #EDB445;
+  --navy-soft: #16294a;
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-body); color: var(--navy); background: #fff; -webkit-font-smoothing: antialiased; }
+button, input { font: inherit; }

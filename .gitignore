@@ -1,0 +1,15 @@
+# dependencies and build output
+node_modules/
+frontend/dist/
+
+# local secrets and settings - never commit
+backend/config/config.local.php
+.env
+.env.*
+
+# editor / OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
